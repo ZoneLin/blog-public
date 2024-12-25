@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>筆記ZONE • Posts by &#34;字型&#34; tag</title>
+        <link>https://zonego.tw</link>
+        <description></description>
+        <language>zh-TW</language>
+        <pubDate>Mon, 15 Apr 2024 02:40:10 +0000</pubDate>
+        <lastBuildDate>Mon, 15 Apr 2024 02:40:10 +0000</lastBuildDate>
+        <category>Hexo</category>
+        <category>Blog</category>
+        <category>搜尋引擎</category>
+        <category>Self-Hosting</category>
+        <category>網路</category>
+        <category>Windows</category>
+        <category>Linux</category>
+        <category>Mac</category>
+        <category>Apple Silicon</category>
+        <category>VM 虛擬機</category>
+        <category>DNS</category>
+        <category>Google</category>
+        <category>廣告</category>
+        <category>網站架設</category>
+        <category>Cloudflare</category>
+        <category>靜態網站</category>
+        <category>Git</category>
+        <category>資安</category>
+        <category>網路資源</category>
+        <category>CI/CD</category>
+        <category>Drone</category>
+        <category>Gitea</category>
+        <category>GMail</category>
+        <category>套件管理</category>
+        <category>字型</category>
+        <category>環境變數</category>
+        <category>Ubuntu</category>
+        <category>桌布</category>
+        <category>DIY</category>
+        <category>Wiki JS</category>
+        <category>Keyckoak</category>
+        <category>身分認證</category>
+        <item>
+            <guid isPermalink="true">https://zonego.tw/2024/04/15/iansui-font/</guid>
+            <title>芫荽 繁中字型</title>
+            <link>https://zonego.tw/2024/04/15/iansui-font/</link>
+            <category>網路資源</category>
+            <category>字型</category>
+            <pubDate>Mon, 15 Apr 2024 02:40:10 +0000</pubDate>
+            <description><![CDATA[ &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+
+&lt;h1 id=&#34;芫荽-iansui&#34;&gt;&lt;a href=&#34;#芫荽-iansui&#34; class=&#34;headerlink&#34; title=&#34;芫荽 &amp;#x2F; iansui&#34;&gt;&lt;/a&gt;芫荽 &amp;#x2F; iansui&lt;/h1&gt;&lt;p&gt;第一套為台灣教育使用所改造的繁體硬筆楷書字型&lt;/p&gt;
+&lt;p&gt;An open source Chinese font derived from Klee One (Fontworks).&lt;br&gt;基於 Fontworks 的 Klee One 衍生的開源繁體中文字型。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/ButTaiwan/iansui/blob/main/img/iansui_sample.jpg&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;開源授權規定&#34;&gt;&lt;a href=&#34;#開源授權規定&#34; class=&#34;headerlink&#34; title=&#34;開源授權規定&#34;&gt;&lt;/a&gt;開源授權規定&lt;/h2&gt;&lt;p&gt;除單獨出售字型檔禁止外，任何人可以無償使用此字型，包含商用。無須告知原作者。&lt;/p&gt;
+&lt;h2 id=&#34;下載&#34;&gt;&lt;a href=&#34;#下載&#34; class=&#34;headerlink&#34; title=&#34;下載&#34;&gt;&lt;/a&gt;下載&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ButTaiwan/iansui&#34;&gt;GitHub 下載點&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在 GitHub 專案的 Release 頁面，點最新版本的 &lt;code&gt;iansui.zip&lt;/code&gt; 下載&lt;br&gt;&lt;img src=&#34;/images/content/iansui-font/iansui1.jpg&#34;&gt;&lt;br&gt;&lt;img src=&#34;/images/content/iansui-font/iansui2.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;將 &lt;code&gt;iansui.zip&lt;/code&gt; 解壓縮後，找到 &lt;code&gt;Iansui-Regular.ttf&lt;/code&gt; 點兩下即可安裝。&lt;/p&gt;
+&lt;h3 id=&#34;另外也有發音符號的版本&#34;&gt;&lt;a href=&#34;#另外也有發音符號的版本&#34; class=&#34;headerlink&#34; title=&#34;另外也有發音符號的版本&#34;&gt;&lt;/a&gt;另外也有發音符號的版本&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ButTaiwan/bpmfvs&#34;&gt;注音芫荽&lt;/a&gt; 芫荽的注音字型。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ButTaiwan/taigivs&#34;&gt;字咍芫荽&lt;/a&gt; 台語標音字型家族。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;圖片、資訊來源：&#34;&gt;&lt;a href=&#34;#圖片、資訊來源：&#34; class=&#34;headerlink&#34; title=&#34;圖片、資訊來源：&#34;&gt;&lt;/a&gt;圖片、資訊來源：&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://www.facebook.com/aestheticell/posts/4828133620624562&#34;&gt;美感細胞 教科書再造計畫&lt;/a&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

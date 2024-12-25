@@ -1,0 +1,19 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "筆記ZONE • All posts by \"字型\" tag",
+    "description": "",
+    "home_page_url": "https://zonego.tw",
+    "items": [
+        {
+            "id": "https://zonego.tw/2024/04/15/iansui-font/",
+            "url": "https://zonego.tw/2024/04/15/iansui-font/",
+            "title": "芫荽 繁中字型",
+            "date_published": "2024-04-15T02:40:10.000Z",
+            "content_html": "<span id=\"more\"></span>\n\n<h1 id=\"芫荽-iansui\"><a href=\"#芫荽-iansui\" class=\"headerlink\" title=\"芫荽 &#x2F; iansui\"></a>芫荽 &#x2F; iansui</h1><p>第一套為台灣教育使用所改造的繁體硬筆楷書字型</p>\n<p>An open source Chinese font derived from Klee One (Fontworks).<br>基於 Fontworks 的 Klee One 衍生的開源繁體中文字型。</p>\n<p><img src=\"https://github.com/ButTaiwan/iansui/blob/main/img/iansui_sample.jpg\"></p>\n<h2 id=\"開源授權規定\"><a href=\"#開源授權規定\" class=\"headerlink\" title=\"開源授權規定\"></a>開源授權規定</h2><p>除單獨出售字型檔禁止外，任何人可以無償使用此字型，包含商用。無須告知原作者。</p>\n<h2 id=\"下載\"><a href=\"#下載\" class=\"headerlink\" title=\"下載\"></a>下載</h2><p><a href=\"https://github.com/ButTaiwan/iansui\">GitHub 下載點</a></p>\n<p>在 GitHub 專案的 Release 頁面，點最新版本的 <code>iansui.zip</code> 下載<br><img src=\"/images/content/iansui-font/iansui1.jpg\"><br><img src=\"/images/content/iansui-font/iansui2.jpg\"></p>\n<p>將 <code>iansui.zip</code> 解壓縮後，找到 <code>Iansui-Regular.ttf</code> 點兩下即可安裝。</p>\n<h3 id=\"另外也有發音符號的版本\"><a href=\"#另外也有發音符號的版本\" class=\"headerlink\" title=\"另外也有發音符號的版本\"></a>另外也有發音符號的版本</h3><ul>\n<li><a href=\"https://github.com/ButTaiwan/bpmfvs\">注音芫荽</a> 芫荽的注音字型。</li>\n<li><a href=\"https://github.com/ButTaiwan/taigivs\">字咍芫荽</a> 台語標音字型家族。</li>\n</ul>\n<h2 id=\"圖片、資訊來源：\"><a href=\"#圖片、資訊來源：\" class=\"headerlink\" title=\"圖片、資訊來源：\"></a>圖片、資訊來源：</h2><p><a href=\"https://www.facebook.com/aestheticell/posts/4828133620624562\">美感細胞 教科書再造計畫</a></p>\n",
+            "tags": [
+                "網路資源",
+                "字型"
+            ]
+        }
+    ]
+}

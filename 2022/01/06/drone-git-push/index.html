@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+
+<head>
+    
+    <title>drone-git-push 踩雷心得 - 筆記ZONE</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <meta name="description" content="Drone CI 是一個可以自行的 CI (Continuous Integration) 軟體 使用 CI 的用意就是為了，能在寫完程式時，自動測試、編譯與發佈程式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="drone-git-push 踩雷心得">
+<meta property="og:url" content="https://zonego.tw/2022/01/06/drone-git-push/index.html">
+<meta property="og:site_name" content="筆記ZONE">
+<meta property="og:description" content="Drone CI 是一個可以自行的 CI (Continuous Integration) 軟體 使用 CI 的用意就是為了，能在寫完程式時，自動測試、編譯與發佈程式。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://zonego.tw/images/content/DroneCI-secret.png">
+<meta property="article:published_time" content="2022-01-06T12:15:54.000Z">
+<meta property="article:modified_time" content="2024-12-25T01:42:31.141Z">
+<meta property="article:author" content="Zone Lin">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="Drone">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zonego.tw/images/content/DroneCI-secret.png">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1735090976299">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1735090976299">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1735090976302">
+        
+    
+
+    
+<script src="/lib/mdui_043tiny/mdui.js" async></script>
+<script src="/lib/fancybox/fancybox.umd.js" async></script>
+
+
+    <script async src="/js/app.js?v=1735090976302"></script>
+    
+     
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-92G2VB89BE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-92G2VB89BE');
+</script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5857950919507241" crossorigin="anonymous"></script>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" 
+            style="background-image: url(/images/cover.jpg)"
+        ></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="Zone Lin" class="mdui-btn mdui-btn-icon"><img src="https://s.gravatar.com/avatar/0b1d2b9d95375cc6af5909e145fb4a06" alt="Zone Lin"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="Zone Lin">
+            <img src="https://s.gravatar.com/avatar/0b1d2b9d95375cc6af5909e145fb4a06" alt="Zone Lin" alt="Zone Lin">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>33</div>
+        <div><span>標籤</span>32</div>
+        <div><span>分類</span>7</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="首頁">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                首頁
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive/" title="所有文章">
+            <i class="mdui-list-item-icon nexmoefont icon-appstore-fill"></i>
+            <div class="mdui-list-item-content">
+                所有文章
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/rss/" title="訂閱文章">
+            <i class="mdui-list-item-icon nexmoefont icon-rss"></i>
+            <div class="mdui-list-item-content">
+                訂閱文章
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/board/" title="留言板">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                留言板
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/assets/" title="免費素材整理">
+            <i class="mdui-list-item-icon nexmoefont icon-tags-fill"></i>
+            <div class="mdui-list-item-content">
+                免費素材整理
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about/" title="關於我">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                關於我
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+        
+            
+            <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="搜尋" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1735090976303"></script>
+
+
+
+        
+            
+            <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="mailto:th5331958@gmail.com"
+			target="_blank"
+			mdui-tooltip="{content: 'EMail'}"
+			style="
+				color: rgb(249, 174, 8);
+				background-color: rgba(249, 174, 8, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/ZoneLin/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://zonego.tw/rss.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+        
+            
+            
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分類</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Blog/">Blog</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/DIY/">DIY</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Home-Lab/">Home Lab</a>
+          <span class="category-list-count">5</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/小工具/">小工具</a>
+          <span class="category-list-count">10</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/系統設定/">系統設定</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/網路資源/">網路資源</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/開發相關/">開發相關</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+        
+            
+            
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Apple-Silicon/" style="font-size: 10px;">Apple Silicon</a> <a href="/tags/Blog/" style="font-size: 18.33px;">Blog</a> <a href="/tags/CI-CD/" style="font-size: 10px;">CI/CD</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/DIY/" style="font-size: 10px;">DIY</a> <a href="/tags/DNS/" style="font-size: 10px;">DNS</a> <a href="/tags/Drone/" style="font-size: 10px;">Drone</a> <a href="/tags/GMail/" style="font-size: 10px;">GMail</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Gitea/" style="font-size: 11.67px;">Gitea</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Keyckoak/" style="font-size: 10px;">Keyckoak</a> <a href="/tags/Linux/" style="font-size: 18.33px;">Linux</a> <a href="/tags/Mac/" style="font-size: 18.33px;">Mac</a> <a href="/tags/Self-Hosting/" style="font-size: 15px;">Self-Hosting</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/VM-%E8%99%9B%E6%93%AC%E6%A9%9F/" style="font-size: 10px;">VM 虛擬機</a> <a href="/tags/Wiki-JS/" style="font-size: 10px;">Wiki JS</a> <a href="/tags/Windows/" style="font-size: 20px;">Windows</a> <a href="/tags/%E5%A5%97%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">套件管理</a> <a href="/tags/%E5%AD%97%E5%9E%8B/" style="font-size: 10px;">字型</a> <a href="/tags/%E5%BB%A3%E5%91%8A/" style="font-size: 10px;">廣告</a> <a href="/tags/%E6%90%9C%E5%B0%8B%E5%BC%95%E6%93%8E/" style="font-size: 11.67px;">搜尋引擎</a> <a href="/tags/%E6%A1%8C%E5%B8%83/" style="font-size: 10px;">桌布</a> <a href="/tags/%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8/" style="font-size: 11.67px;">環境變數</a> <a href="/tags/%E7%B6%B2%E7%AB%99%E6%9E%B6%E8%A8%AD/" style="font-size: 10px;">網站架設</a> <a href="/tags/%E7%B6%B2%E8%B7%AF/" style="font-size: 11.67px;">網路</a> <a href="/tags/%E7%B6%B2%E8%B7%AF%E8%B3%87%E6%BA%90/" style="font-size: 13.33px;">網路資源</a> <a href="/tags/%E8%B3%87%E5%AE%89/" style="font-size: 10px;">資安</a> <a href="/tags/%E8%BA%AB%E5%88%86%E8%AA%8D%E8%AD%89/" style="font-size: 10px;">身分認證</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/" style="font-size: 10px;">靜態網站</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(32);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+        
+            
+            
+            
+            
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/15/iansui-font/">芫荽 繁中字型</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/02/BingWebmasterTools/">Bing Webmaster Tools - 讓 Bing 搜尋到部落格內容</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/18/emoji-kitchen/">Emoji Kitchen 自己組合出想要的表情符號</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/16/adsense/">Google AdSense 讓你的網站幫你賺錢</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/02/google-search-console/">Google Search Console - 讓 Google 搜尋到部落格內容</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+        
+            
+    </aside>
+    <div class="nexmoe-copyright">
+        &copy; 2024 Zone Lin
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="zonego" data-description="Support me on Buy me a coffee!" data-message="如果你喜歡這個網站，歡迎請我喝杯咖啡☕" data-color="#FF5F5F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<div>Icons made by <a target="_blank" rel="noopener" href="https://www.freepik.com" title="Freepik">Freepik</a> from <a target="_blank" rel="noopener" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+    <div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 33.3203125%;"> 
+            <img src="/images/cover/DroneCI.jpg" alt="drone-git-push 踩雷心得" loading="lazy">
+            <h1>drone-git-push 踩雷心得</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2022年01月06日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E9%96%8B%E7%99%BC%E7%9B%B8%E9%97%9C/">開發相關</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <p><a target="_blank" rel="noopener" href="https://www.drone.io/">Drone CI</a> 是一個可以自行的 CI (Continuous Integration) 軟體</p>
+<p>使用 CI 的用意就是為了，能在寫完程式時，自動測試、編譯與發佈程式。</p>
+<span id="more"></span>
+
+<p>關於怎麼架設改天再寫一篇教學。 <del>Google一下應該就很多教學了</del></p>
+<h2 id="drone-git-push"><a href="#drone-git-push" class="headerlink" title="drone-git-push"></a>drone-git-push</h2><p>回來本篇主題</p>
+<p>這次我的需求是在 Drone 的流程內，測試或編譯完程式後以 git 推送到不同的儲藏庫</p>
+<p>其實就是要產生網站檔案後，推送到 GitHub 方便用 GitHub Page 或是 Cloudflare Page</p>
+<p>在 Drone CI 中可以用 <a target="_blank" rel="noopener" href="http://plugins.drone.io/appleboy/drone-git-push/">drone-git-push</a> 做到</p>
+<p>這次遇到的問題有2個 <del>害我為了找問題多花很多時間</del></p>
+<h2 id="儲存庫辨識失敗"><a href="#儲存庫辨識失敗" class="headerlink" title="儲存庫辨識失敗"></a>儲存庫辨識失敗</h2><p>錯誤訊息:</p>
+<figure class="highlight node-repl"><table><tr><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">...</span><br>parse \&quot;git@github.com:user/repo.git\&quot;: first path segment in URL cannot contain colon&quot;<br><span class="hljs-meta prompt_">...</span><br></code></pre></td></tr></table></figure>
+
+<p>照原本文件寫的 <code>.drone.yml</code> 大概是長這樣</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">deploy</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">image:</span> <span class="hljs-string">appleboy/drone-git-push</span><br>  <span class="hljs-attr">settings:</span><br>    <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>    <span class="hljs-attr">remote:</span> <span class="hljs-string">git@github.com:user/repo.git</span><br>    <span class="hljs-attr">force:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">commit:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>參考<a target="_blank" rel="noopener" href="https://github.com/appleboy/drone-git-push/issues/40">GitHub討論區</a>的解決方法</p>
+<ul>
+<li>使用緊急修補的 image</li>
+<li>remote 改用字串</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">deploy</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">image:</span> <span class="hljs-string">appleboy/drone-git-push:0.2.0-linux-amd64</span><br>  <span class="hljs-attr">settings:</span><br>    <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>    <span class="hljs-attr">remote:</span> <span class="hljs-string">&quot;git@github.com:user/repo.git&quot;</span><br>    <span class="hljs-attr">force:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">commit:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="SSH-Key-讀取失敗"><a href="#SSH-Key-讀取失敗" class="headerlink" title="SSH Key 讀取失敗"></a>SSH Key 讀取失敗</h2><p>由於資安的關係， SSH KEY 不可以跟著程式碼推送到儲存庫，更不可能放明碼在設定檔中</p>
+<p>在 Drone CI 要改用 secret 的功能</p>
+<p><code>.drone.yml</code> 大概長這樣</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">deploy</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">image:</span> <span class="hljs-string">appleboy/drone-git-push:0.2.0-linux-amd64</span><br>  <span class="hljs-attr">settings:</span><br>    <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>    <span class="hljs-attr">ssh_key:</span><br>      <span class="hljs-attr">from_secret:</span> <span class="hljs-string">githubkey</span><br></code></pre></td></tr></table></figure>
+
+<p>另外在 Drone CI 的 WebUI 上添加 Secret</p>
+<p>將 private key 的內文貼進去</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="/images/content/DroneCI-secret.png" alt="secret" data-caption="secret" loading="lazy"></p>
+<p>然後就碰到問題了</p>
+<p>錯誤訊息:</p>
+<figure class="highlight node-repl"><table><tr><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">...</span><br>Load key &quot;/root/.ssh/id_rsa&quot;: invalid format<br><span class="hljs-meta prompt_">...</span><br></code></pre></td></tr></table></figure>
+
+<p>參考<a target="_blank" rel="noopener" href="https://github.com/appleboy/drone-git-push/issues/37">GitHub討論區</a>的解決方法</p>
+<ul>
+<li>產生的 SSH key 需要改用 PEM</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">&quot;your_email@example.com&quot;</span> -m PEM<br></code></pre></td></tr></table></figure>
+
+<p>換完 KEY 甚麼問題都沒了🎉</p>
+
+    <ins class="adsbygoogle"
+   style="display:block; text-align:center;"
+   data-ad-layout="in-article"
+   data-ad-format="fluid"
+   data-ad-client="ca-pub-5857950919507241"
+   data-ad-slot="6290484367"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>Zone Lin<br>
+        <strong>本文連結：</strong><a href="https://zonego.tw/2022/01/06/drone-git-push/" title="https:&#x2F;&#x2F;zonego.tw&#x2F;2022&#x2F;01&#x2F;06&#x2F;drone-git-push&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;zonego.tw&#x2F;2022&#x2F;01&#x2F;06&#x2F;drone-git-push&#x2F;</a><br>
+        
+            <strong>版權宣告：</strong>本文採用 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh_TW" target="_blank">創用CC BY 4.0</a> 協議進行許可
+<br>貼文內使用的封面圖大部分來自<a href="https://unsplash.com/" target="_blank">unsplash</a>，個別圖片的連結請看<a href="/about/#封面圖" target="_blank">封面圖來源</a>
+
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/CI-CD/" rel="tag">CI/CD</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Drone/" rel="tag">Drone</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Git/" rel="tag">Git</a>
+    
+</div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1735090975974"></script>
+  
+
+  
+      <div class="nexmoe-post-footer">
+          <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '4154b7069cefd96aa34b',
+    clientSecret: '4d1e06eb5468a4a083bdb0b6095c613deb234ea1',
+    repo: 'zonelin.github.io',
+    owner: 'ZoneLin',
+    admin: ['ZoneLin'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+      </div>
+  
+</div>
+</div>
+        <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#drone-git-push"><span class="toc-number">1.</span> <span class="toc-text">drone-git-push</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%84%B2%E5%AD%98%E5%BA%AB%E8%BE%A8%E8%AD%98%E5%A4%B1%E6%95%97"><span class="toc-number">2.</span> <span class="toc-text">儲存庫辨識失敗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-Key-%E8%AE%80%E5%8F%96%E5%A4%B1%E6%95%97"><span class="toc-number">3.</span> <span class="toc-text">SSH Key 讀取失敗</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="搜尋"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+    
+</body>
+
+</html>
